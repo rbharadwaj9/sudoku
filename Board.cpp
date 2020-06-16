@@ -7,11 +7,11 @@
 
 #include "Board.h"
 
-Board::Board() : status(std::vector<std::vector<bool> >(9, std::vector<bool>(9, false))),
-    grid(std::vector<std::vector<Coordinate> >(9, std::vector<Coordinate>()))
+Board::Board() : state(std::vector<std::vector<bool> >(9, std::vector<bool>(9, false))),
+    occupied_grid(std::vector<std::vector<Coordinate> >(9, std::vector<Coordinate>()))
 {
     for (size_t i = 0; i < 9; ++i)
-        grid[i].reserve(9);
+        occupied_grid[i].reserve(9);
 }
 
 Board::Board(std::istream &file)
@@ -32,7 +32,8 @@ Board::Board(std::istream &file)
                 continue;
             if (!is_number(val))
                 throw BoardException::InvalidInput(val);
-            this->grid[(val-'0')-1].emplace_back(i,j);
+            this->occupied_grid[(val-'0')-1].emplace_back(i,j);
+            state[i][j] = true;
         }
     }
 }

@@ -20,10 +20,11 @@ class Board
     public:
         Board();
         Board(std::istream &file);
+        // Board(generate=true);
     private:
         bool is_number(char &c);
-        std::vector<std::vector<bool> > status;
-        std::vector<std::vector<Coordinate> > grid;
+        std::vector<std::vector<bool> > state;
+        std::vector<std::vector<Coordinate> > occupied_grid;
 };
 
 struct BoardException
