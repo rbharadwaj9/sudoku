@@ -1,0 +1,7 @@
+# Executables
+*.exe
+*.dSYM
+
+# Swap files
+*.swp
+*.swo

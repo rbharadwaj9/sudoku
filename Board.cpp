@@ -13,3 +13,38 @@ Board::Board() : status(std::vector<std::vector<bool> >(9, std::vector<bool>(9, 
     for (size_t i = 0; i < 9; ++i)
         grid[i].reserve(9);
 }
+
+Board::Board(std::istream &file)
+{
+    *this = Board();
+    
+    std::string line;
+    getline(file, line);
+
+    char val;
+    for (uint8_t i = 0; i < 9; ++i)
+    {
+        for (uint8_t j = 0; j < 9; ++j)
+        {
+            file >> val;
+
+            if (val == 'x')
+                continue;
+            if (!is_number(val))
+                throw BoardException::InvalidInput(val);
+            this->grid[(val-'0')-1].emplace_back(i,j);
+        }
+    }
+}
+
+bool Board::is_number(char &c)
+{
+    if (c >= '1' && c <= '9')
+        return true;
+    return false;
+}
+
+int main()
+{
+    Board b = Board(std::cin);
+}
