@@ -44,3 +44,27 @@ bool Board::is_number(unsigned char &c)
         return true;
     return false;
 }
+
+void Board::print_state()
+{
+    for (const auto &row : state)
+    {
+        for (auto col : row)
+            std::cout << col << " ";
+        std::cout << "\n";
+    }
+}
+
+void Board::print_occupancy_grid()
+{
+    for (size_t i = 0; i < 9; ++i)
+    {
+        std::cout << "Number: " << i << std::endl;
+        for (size_t j = 0; j < occupied_grid[i].size(); ++j)
+        {
+            std::cout << "(" << occupied_grid[i][j].first-0 << "," <<
+                occupied_grid[i][j].second-0 << ")";
+        }
+        std::cout << "\n";
+    }
+}

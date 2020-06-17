@@ -23,15 +23,30 @@ class Solve
 {
     public:
         Solve(Board &board_in);
+        
+        void solve(const Coordinate curr_coordinate, uint8_t possible_number);
+        const Coordinate get_start_coordinate();
 
     private:
+        bool is_solution();
         bool is_promising(const Coordinate c1, uint8_t number);
         uint8_t _get_box_id(const Coordinate c);
+        const Coordinate _get_next_coodinate(const Coordinate c1);
+        bool _is_empty_coordinate(const Coordinate c);
         Board &board;
 };
 
 struct SolveException
 {
+    class SolutionFound : std::exception
+    {
+        public:
+            const char* what() const noexcept
+            {
+                return "Solution found!";
+            }
+    };
+
     class CoordinateException : std::exception
     {
         public:
@@ -49,6 +64,19 @@ struct SolveException
             }
         private:
             const Coordinate msg;
+    };
+
+    class NextCoordinateException : std::exception
+    {
+        public:
+            NextCoordinateException() : msg("Can't find next coordinate")
+        {}
+            const char *what() const noexcept
+            {
+                return msg.c_str();
+            }
+        private:
+            std::string msg;
     };
 };
 
