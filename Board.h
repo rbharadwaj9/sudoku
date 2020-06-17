@@ -26,6 +26,7 @@ class Board
         // Board(generate=true);
         void print_state();
         void print_occupancy_grid();
+        void print_solution();
         std::vector<std::vector<bool> > state;
         std::vector<std::vector<Coordinate> > occupied_grid;
 

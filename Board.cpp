@@ -45,6 +45,24 @@ bool Board::is_number(unsigned char &c)
     return false;
 }
 
+void Board::print_solution()
+{
+    std::vector<std::vector<uint8_t> > soln(9, std::vector<uint8_t>(8, '.'));
+    for (size_t i = 0; i < 9; ++i)
+    {
+        for (const auto coord : occupied_grid[i])
+        {
+            soln[coord.first][coord.second] = static_cast<uint8_t>(i);
+        }
+    }
+    for (const auto &row : soln)
+    {
+        for (auto col : row)
+            std::cout << static_cast<char>(col+'0') << " ";
+        std::cout << "\n";
+    }
+}
+
 void Board::print_state()
 {
     for (const auto &row : state)

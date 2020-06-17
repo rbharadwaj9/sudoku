@@ -12,14 +12,14 @@ Solve::Solve(Board &board_in) : board(board_in)
 
 void Solve::solve(const Coordinate curr_coordinate, uint8_t possible_number)
 {
+    if (curr_coordinate.first == 0)
+    {
+        board.print_state();
+        board.print_occupancy_grid();
+        board.print_solution();
+    }
     if (is_promising(curr_coordinate, possible_number))
     {
-        if (curr_coordinate.first == 0)
-        {
-            board.print_state();
-            board.print_occupancy_grid();
-        }
-
         board.state[curr_coordinate.first][curr_coordinate.second] = true;
         board.occupied_grid[possible_number].emplace_back(curr_coordinate.first, 
                 curr_coordinate.second);
@@ -52,18 +52,25 @@ bool Solve::_is_empty_coordinate(const Coordinate c)
     return true;
 }
 
-const Coordinate Solve::_get_next_coodinate(const Coordinate c1)
+const Coordinate Solve::_get_unchecked_coordinate(const Coordinate c1)
 {
-    uint8_t col = c1.second;
-    for (; col < 9; ++col)
-    {
-        if (_is_empty_coordinate({c1.first, col})) 
-            return {c1.first, col};
-    }
-    if (col == 8)
-        return _get_next_coodinate({c1.first+1, 0});
+    if (c1.first > 8 || c1.second > 8)
+        throw SolveException::NextCoordinateException(); 
 
-    throw SolveException::NextCoordinateException(); 
+    if (c1.second == 8)
+        return {c1.first+1, 0};
+    return {c1.first, c1.second+1};
+}
+
+const Coordinate Solve::_get_next_coodinate(Coordinate c1)
+{
+    while (true)
+    {
+        const Coordinate retval = _get_unchecked_coordinate(c1);
+        if (_is_empty_coordinate(retval))
+            return retval;
+        c1 = retval;
+    }
 }
 
 bool Solve::is_solution()

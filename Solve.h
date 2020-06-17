@@ -32,6 +32,7 @@ class Solve
         bool is_promising(const Coordinate c1, uint8_t number);
         uint8_t _get_box_id(const Coordinate c);
         const Coordinate _get_next_coodinate(const Coordinate c1);
+        const Coordinate _get_unchecked_coordinate(const Coordinate c1);
         bool _is_empty_coordinate(const Coordinate c);
         Board &board;
 };
