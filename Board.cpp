@@ -21,7 +21,7 @@ Board::Board(std::istream &file)
     std::string line;
     getline(file, line);
 
-    char val;
+    unsigned char val;
     for (uint8_t i = 0; i < 9; ++i)
     {
         for (uint8_t j = 0; j < 9; ++j)
@@ -38,14 +38,9 @@ Board::Board(std::istream &file)
     }
 }
 
-bool Board::is_number(char &c)
+bool Board::is_number(unsigned char &c)
 {
     if (c >= '1' && c <= '9')
         return true;
     return false;
-}
-
-int main()
-{
-    Board b = Board(std::cin);
 }

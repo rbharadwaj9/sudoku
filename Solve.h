@@ -23,10 +23,33 @@ class Solve
 {
     public:
         Solve(Board &board_in);
+
     private:
-        bool is_promising(const Coordinate c, uint8_t number);
+        bool is_promising(const Coordinate c1, uint8_t number);
         uint8_t _get_box_id(const Coordinate c);
         Board &board;
+};
+
+struct SolveException
+{
+    class CoordinateException : std::exception
+    {
+        public:
+            CoordinateException(const Coordinate c) : msg(c)
+            {}
+
+            const char* what() const noexcept
+            {
+                std::string retval = "CoordinateException: Not a valid coordinate: (";
+                retval += std::to_string(msg.first);
+                retval += ",";
+                retval += std::to_string(msg.second);
+                retval += ")";
+                return retval.c_str();
+            }
+        private:
+            const Coordinate msg;
+    };
 };
 
 #endif

@@ -32,5 +32,25 @@ uint8_t Solve::_get_box_id(const Coordinate c)
         return 7;
     else if ((row >= 6 && row < 9) && (col >= 6 && col < 9))
         return 8;
-    assert(false);
+    throw SolveException::CoordinateException(c);
+}
+
+bool Solve::is_promising(const Coordinate c1, uint8_t number)
+{
+    uint8_t c1_box = _get_box_id(c1);
+    for (const auto c2 : board.occupied_grid[number])
+    {
+        uint8_t c2_box = _get_box_id(c2); 
+        if ((c1_box == c2_box) || (c1.first == c2.first) || (c1.second == c2.second))
+            return false;
+    }
+    return true;
+}
+
+int main()
+{
+    Board b = Board(std::cin);
+    Coordinate c = {0,1};
+    Solve s = Solve(b);
+    s.stuff(c);
 }

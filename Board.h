@@ -2,6 +2,9 @@
 
 /* File defines the sudoku board class. */ 
 
+/* Some conventions: */ 
+/* Except for the input file, all numbers start from 0 to 8 */
+
 /* 13 June, 2020 */
 /* Rajiv Bharadwaj */
 
@@ -21,10 +24,11 @@ class Board
         Board();
         Board(std::istream &file);
         // Board(generate=true);
-    private:
-        bool is_number(char &c);
         std::vector<std::vector<bool> > state;
         std::vector<std::vector<Coordinate> > occupied_grid;
+
+    private:
+        bool is_number(unsigned char &c);
 };
 
 struct BoardException
@@ -32,17 +36,17 @@ struct BoardException
     class InvalidInput : std::exception
     {
         public:
-            InvalidInput(char &msg_in) : msg(msg_in)
+            InvalidInput(unsigned char &msg_in) : msg(msg_in)
             {}
 
             const char* what() const noexcept
             {
                 std::string retval = "InvalidInputException: Not a valid input - ";
-                retval.push_back(msg);
+                retval.push_back(static_cast<char>(msg));
                 return retval.c_str();
             }
         private:
-            char msg;
+            unsigned char msg;
     };
 };
 

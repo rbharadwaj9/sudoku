@@ -13,8 +13,61 @@ argglobal
 %argdel
 $argadd Board.cpp
 tabnew
+tabnew
 tabrewind
 edit Board.cpp
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+set nosplitright
+wincmd t
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 101 + 102) / 204)
+exe 'vert 2resize ' . ((&columns * 102 + 102) / 204)
+argglobal
+setlocal fdm=syntax
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+let s:l = 4 - ((2 * winheight(0) + 19) / 38)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+4
+normal! 0
+wincmd w
+argglobal
+if bufexists("Board.h") | buffer Board.h | else | edit Board.h | endif
+setlocal fdm=syntax
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+let s:l = 48 - ((36 * winheight(0) + 19) / 38)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+48
+normal! 023|
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 101 + 102) / 204)
+exe 'vert 2resize ' . ((&columns * 102 + 102) / 204)
+tabnext
+edit Solve.cpp
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -38,15 +91,15 @@ setlocal fdl=1
 setlocal fml=1
 setlocal fdn=20
 setlocal nofen
-let s:l = 36 - ((30 * winheight(0) + 20) / 41)
+let s:l = 33 - ((32 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-36
-normal! 09|
+33
+normal! 049|
 wincmd w
 argglobal
-if bufexists("Board.h") | buffer Board.h | else | edit Board.h | endif
+if bufexists("Solve.h") | buffer Solve.h | else | edit Solve.h | endif
 setlocal fdm=syntax
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -55,12 +108,12 @@ setlocal fdl=1
 setlocal fml=1
 setlocal fdn=20
 setlocal nofen
-let s:l = 23 - ((13 * winheight(0) + 20) / 41)
+let s:l = 50 - ((34 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
-normal! 032|
+50
+normal! 033|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 102 + 102) / 204)
 exe 'vert 2resize ' . ((&columns * 101 + 102) / 204)
@@ -83,7 +136,7 @@ setlocal fdl=1
 setlocal fml=1
 setlocal fdn=20
 setlocal nofen
-let s:l = 1 - ((0 * winheight(0) + 20) / 41)
+let s:l = 1 - ((0 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -91,8 +144,10 @@ normal! zt
 normal! 0
 tabnext 1
 badd +0 Board.cpp
-badd +0 Board.h
+badd +29 Board.h
 badd +0 README.md
+badd +21 Solve.h
+badd +8 Solve.cpp
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -104,7 +159,6 @@ if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
