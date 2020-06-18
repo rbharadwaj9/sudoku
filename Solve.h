@@ -25,6 +25,7 @@ class Solve
         Solve(Board &board_in);
         
         void solve(const Coordinate curr_coordinate, uint8_t possible_number);
+        void print_solution();
         const Coordinate get_start_coordinate();
 
     private:

@@ -12,12 +12,15 @@ Solve::Solve(Board &board_in) : board(board_in)
 
 void Solve::solve(const Coordinate curr_coordinate, uint8_t possible_number)
 {
-    if (curr_coordinate.first == 0)
-    {
-        board.print_state();
-        board.print_occupancy_grid();
-        board.print_solution();
-    }
+    /* #ifdef DEBUG */
+    /*     if (curr_coordinate.first == 0) */
+    /*     { */
+    /*         board.print_state(); */
+    /*         board.print_occupancy_grid(); */
+    /*         board.print_solution(); */
+    /*         std::cout << "BREAKPOINT" << std::endl; */
+    /*     } */
+    /* #endif */
     if (is_promising(curr_coordinate, possible_number))
     {
         board.state[curr_coordinate.first][curr_coordinate.second] = true;
@@ -42,7 +45,9 @@ void Solve::solve(const Coordinate curr_coordinate, uint8_t possible_number)
 const Coordinate Solve::get_start_coordinate()
 {
     Coordinate origin = {0,0};
-    return _get_next_coodinate(origin);
+    if (board.state[0][0])
+        return _get_next_coodinate(origin);
+    return origin;
 }
 
 bool Solve::_is_empty_coordinate(const Coordinate c)
@@ -118,10 +123,7 @@ bool Solve::is_promising(const Coordinate c1, uint8_t number)
     return true;
 }
 
-int main()
+void Solve::print_solution()
 {
-    Board b = Board(std::cin);
-    Solve s = Solve(b);
-    Coordinate start = s.get_start_coordinate();
-    s.solve(start, 0);
+    board.print_solution();
 }
