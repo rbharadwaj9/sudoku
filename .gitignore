@@ -5,3 +5,6 @@
 # Swap files
 *.swp
 *.swo
+
+# Vim Sessions
+*.vimsession
